@@ -1,3 +1,4 @@
+name: "$(date:yy)$(DayOfYear)$(rev:.r)"
 steps:
   - template: "templates/windows-build-and-unit-test.yml"
     parameters:
