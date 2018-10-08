@@ -1,0 +1,7 @@
+steps:
+  - template: ".azure-pipelines/templates/windows-build-and-unit-test.yml"
+    parameters:
+      BuildConfiguration: "$(BuildConfiguration)"
+      MajorAndMinorVersion: "$(GVFSMajorAndMinorVersion)"
+      Revision: "$(Build.BuildNumber)"
+  - script: "echo hello world"

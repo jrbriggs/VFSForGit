@@ -1,0 +1,27 @@
+parameters:
+  BuildConfiguration: "release"
+  MajorAndMinorVersion: "0.3"
+  Revision: "$(Build.BuildNumber)"
+
+steps:
+  - script: "$(Build.Repository.LocalPath)\\Scripts\\NukeBuildOutputs.bat"
+    displayName: "Delete previous build outputs"
+    continueOnError: true
+  - powershell: |
+      & 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe' -Vr *,31bf3856ad364e35
+      & 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe' -Vr *,31bf3856ad364e35
+    displayName: "Disable strong name validation for MS delay-signed assemblies"
+  - script: "$(Build.Repository.LocalPath)\\Scripts\\BuildGVFSForWindows.bat $(BuildConfiguration) $(MajorAndMinorVersion).$(Revision)"
+    displayName: "Run VFSForGit build script ($(BuildConfiguration))"
+  - script: "$(Build.Repository.LocalPath)\\Scripts\\RunUnitTests.bat $(BuildConfiguration)"
+    displayName: "Run unit tests"
+  - task: PublishTestResults@2
+    displayName: "Publish Unit Test Results"
+    inputs:
+      testRunner: NUnit
+      testResultsFiles: "**\\TestResult.xml"
+      searchFolder: "$(System.DefaultWorkingDirectory)"
+      testRunTitle: "Windows Unit Tests"
+      publishRunAttachments: true
+  - script: "$(Build.Repository.LocalPath)\\MirrorProvider\\Scripts\\Windows\\Build.bat $(BuildConfiguration)"
+    displayName: "Build MirrorProvider ($(BuildConfiguration))"
