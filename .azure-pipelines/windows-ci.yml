@@ -1,5 +1,5 @@
 steps:
-  - template: ".azure-pipelines/templates/windows-build-and-unit-test.yml"
+  - template: "templates/windows-build-and-unit-test.yml"
     parameters:
       BuildConfiguration: "$(BuildConfiguration)"
       MajorAndMinorVersion: "$(GVFSMajorAndMinorVersion)"
