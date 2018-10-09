@@ -11,9 +11,9 @@ steps:
       & 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe' -Vr *,31bf3856ad364e35
       & 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe' -Vr *,31bf3856ad364e35
     displayName: Disable strong name validation for MS delay-signed assemblies
-  - script: $(Build.Repository.LocalPath)\\Scripts\\BuildGVFSForWindows.bat ${{ parameters.buildConfiguration }} ${{ parameters.majorAndMinorVersion }}.${{ parameters.revision }}
+  - script: $(Build.Repository.LocalPath)\Scripts\BuildGVFSForWindows.bat ${{ parameters.buildConfiguration }} ${{ parameters.majorAndMinorVersion }}.${{ parameters.revision }}
     displayName: Run VFSForGit build script (${{ parameters.buildConfiguration }})
-  - script: $(Build.Repository.LocalPath)\\Scripts\\RunUnitTests.bat ${{ parameters.buildConfiguration }}
+  - script: $(Build.Repository.LocalPath)\Scripts\RunUnitTests.bat ${{ parameters.buildConfiguration }}
     displayName: Run unit tests
   - task: PublishTestResults@2
     displayName: Publish unit test results
@@ -23,5 +23,5 @@ steps:
       searchFolder: $(System.DefaultWorkingDirectory)
       testRunTitle: Windows unit test results
       publishRunAttachments: true
-  - script: $(Build.Repository.LocalPath)\\MirrorProvider\\Scripts\\Windows\\Build.bat ${{ parameters.buildConfiguration }}
+  - script: $(Build.Repository.LocalPath)\MirrorProvider\Scripts\Windows\Build.bat ${{ parameters.buildConfiguration }}
     displayName: Build MirrorProvider (${{ parameters.buildConfiguration }})
