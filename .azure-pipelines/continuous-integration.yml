@@ -1,0 +1,20 @@
+name: $(date:yy)$(DayOfYear)$(rev:.r)
+
+variables:
+  majorAndMinorVersion: '1.0'
+  revision: '$(Build.BuildNumber)'
+  configuration: 'release'
+  platform: 'x64'
+
+jobs:
+  - job: Windows
+    pool:
+      vmImage: vs2017-win2016
+    steps:
+    - template: templates/windows-build-and-unit-test.yml
+
+  - job: macOS
+    pool:
+      vmImage: macOS 10.13
+    steps:
+    - template: templates/macos-build-and-unit-test.yml

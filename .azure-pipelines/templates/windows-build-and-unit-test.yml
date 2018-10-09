@@ -1,27 +1,39 @@
-parameters:
-  buildConfiguration: release
-  majorAndMinorVersion: "0.3"
-  revision: $(Build.BuildNumber)
-
 steps:
   - script: $(Build.Repository.LocalPath)\\Scripts\\NukeBuildOutputs.bat
+    ###
     displayName: Delete previous build outputs
+    ###
     continueOnError: true
+
   - powershell: |
       & 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\sn.exe' -Vr *,31bf3856ad364e35
       & 'C:\Program Files (x86)\Microsoft SDKs\Windows\v10.0A\bin\NETFX 4.6.1 Tools\x64\sn.exe' -Vr *,31bf3856ad364e35
+    ###
     displayName: Disable strong name validation for MS delay-signed assemblies
-  - script: $(Build.Repository.LocalPath)\Scripts\BuildGVFSForWindows.bat ${{ parameters.buildConfiguration }} ${{ parameters.majorAndMinorVersion }}.${{ parameters.revision }}
-    displayName: Run VFSForGit build script (${{ parameters.buildConfiguration }})
-  - script: $(Build.Repository.LocalPath)\Scripts\RunUnitTests.bat ${{ parameters.buildConfiguration }}
+    ###
+
+  - script: $(Build.Repository.LocalPath)\Scripts\BuildGVFSForWindows.bat $(configuration) $(majorAndMinorVersion).$(revision)
+    ###
+    displayName: Run VFSForGit build script ($(configuration))
+    ###
+
+  - script: $(Build.Repository.LocalPath)\Scripts\RunUnitTests.bat $(configuration)
+    ###
     displayName: Run unit tests
+    ###
+
   - task: PublishTestResults@2
+    ###
     displayName: Publish unit test results
+    ###
     inputs:
       testRunner: NUnit
       testResultsFiles: "**\\TestResult.xml"
       searchFolder: $(System.DefaultWorkingDirectory)
       testRunTitle: Windows unit test results
       publishRunAttachments: true
-  - script: $(Build.Repository.LocalPath)\MirrorProvider\Scripts\Windows\Build.bat ${{ parameters.buildConfiguration }}
-    displayName: Build MirrorProvider (${{ parameters.buildConfiguration }})
+
+  - script: $(Build.Repository.LocalPath)\MirrorProvider\Scripts\Windows\Build.bat $(configuration)
+    ###
+    displayName: Build MirrorProvider ($(configuration))
+    ###
