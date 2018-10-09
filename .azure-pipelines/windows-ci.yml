@@ -10,7 +10,7 @@ variables:
 steps:
   - template: "templates/windows-build-and-unit-test.yml"
     parameters:
-      buildConfiguration: $(configuratino)
+      buildConfiguration: $(configuration)
       majorAndMinorVersion: $(majorAndMinor)
       revision: $(Build.BuildNumber)
   - script: echo hello world
