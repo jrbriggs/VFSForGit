@@ -22,6 +22,11 @@ steps:
     displayName: Run unit tests
     ###
 
+  - script: $(Build.Repository.LocalPath)\MirrorProvider\Scripts\Windows\Build.bat $(configuration)
+    ###
+    displayName: Build MirrorProvider ($(configuration))
+    ###
+
   - task: PublishTestResults@2
     ###
     displayName: Publish unit test results
@@ -30,10 +35,5 @@ steps:
       testRunner: NUnit
       testResultsFiles: "**\\TestResult.xml"
       searchFolder: $(System.DefaultWorkingDirectory)
-      testRunTitle: Windows unit test results
+      testRunTitle: Windows Unit Tests
       publishRunAttachments: true
-
-  - script: $(Build.Repository.LocalPath)\MirrorProvider\Scripts\Windows\Build.bat $(configuration)
-    ###
-    displayName: Build MirrorProvider ($(configuration))
-    ###

@@ -1,2 +1,49 @@
 steps:
-  - script: echo todo
+
+  - task: DotNetCoreInstaller@0
+    ###
+    displayName: Use .NET Core SDK 2.1.301
+    ###
+    inputs:
+      packageType: sdk
+      version: '2.1.301'
+
+  #- task: InstallAppleCertificate@2
+    ###
+    #displayName: Install kext certificate
+    ###
+    #inputs:
+      #certSecureFile: PrjFSKextAug272018.p12
+      #certPwd: $(PrjFSKextCertPassword)
+      #keychain: temp
+
+  - script: Scripts/Mac/BuildGVFSForMac.sh
+    ###
+    displayName: Build VFSForGit (debug)
+    ###
+
+  - script: MirrorProvider/Scripts/Mac/Build.sh
+    ###
+    displayName: Build MirrorProvider (debug)
+    ###
+
+  - script: Scripts/Mac/BuildGVFSForMac.sh Release
+    ###
+    displayName: Build VFSForGit (release)
+    ###
+
+  - script: MirrorProvider/Scripts/Mac/Build.sh Release
+    ###
+    displayName: Build MirrorProvider (release)
+    ###
+
+  - task: PublishTestResults@2
+    ###
+    displayName: Publish test results
+    ###
+    inputs:
+      testRunner: NUnit
+      testResultsFiles: '**/TestResult.xml'
+      searchFolder: $(System.DefaultWorkingDirectory)
+      testRunTitle: Mac Unit Tests
+      publishRunAttachments: true
