@@ -3,11 +3,17 @@ name: $(date:yy)$(DayOfYear)$(rev:.r)
 variables:
   majorAndMinorVersion: '1.0'
   revision: '$(Build.BuildNumber)'
-  configuration: 'release'
   platform: 'x64'
 
 jobs:
   - job: Windows
+    strategy:
+      maxParallel: 2
+      matrix:
+        debug:
+          configuration: debug
+        release:
+          configuration: release
     pool:
       vmImage: vs2017-win2016
     steps:

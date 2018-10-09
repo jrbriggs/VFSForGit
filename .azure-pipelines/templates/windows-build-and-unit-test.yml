@@ -17,14 +17,14 @@ steps:
     displayName: Run VFSForGit build script ($(configuration))
     ###
 
-  - script: $(Build.Repository.LocalPath)\Scripts\RunUnitTests.bat $(configuration)
-    ###
-    displayName: Run unit tests
-    ###
-
   - script: $(Build.Repository.LocalPath)\MirrorProvider\Scripts\Windows\Build.bat $(configuration)
     ###
     displayName: Build MirrorProvider ($(configuration))
+    ###
+
+  - script: $(Build.Repository.LocalPath)\Scripts\RunUnitTests.bat $(configuration)
+    ###
+    displayName: Run unit tests
     ###
 
   - task: PublishTestResults@2
@@ -35,5 +35,5 @@ steps:
       testRunner: NUnit
       testResultsFiles: "**\\TestResult.xml"
       searchFolder: $(System.DefaultWorkingDirectory)
-      testRunTitle: Windows Unit Tests
+      testRunTitle: Windows $(configuration) Unit Tests
       publishRunAttachments: true
