@@ -1,7 +1,7 @@
 parameters:
   buildConfiguration: release
   majorAndMinorVersion: "0.3"
-  Revision: $(Build.BuildNumber)
+  revision: $(Build.BuildNumber)
 
 steps:
   - script: $(Build.Repository.LocalPath)\\Scripts\\NukeBuildOutputs.bat
