@@ -17,24 +17,14 @@ steps:
       #certPwd: $(PrjFSKextCertPassword)
       #keychain: temp
 
-  - script: Scripts/Mac/BuildGVFSForMac.sh
+  - script: Scripts/Mac/BuildGVFSForMac.sh $(configuration)
     ###
-    displayName: Build VFSForGit (debug)
-    ###
-
-  - script: MirrorProvider/Scripts/Mac/Build.sh
-    ###
-    displayName: Build MirrorProvider (debug)
+    displayName: Build VFSForGit $(configuration)
     ###
 
-  - script: Scripts/Mac/BuildGVFSForMac.sh Release
+  - script: MirrorProvider/Scripts/Mac/Build.sh $(configuration)
     ###
-    displayName: Build VFSForGit (release)
-    ###
-
-  - script: MirrorProvider/Scripts/Mac/Build.sh Release
-    ###
-    displayName: Build MirrorProvider (release)
+    displayName: Build MirrorProvider $(configuration)
     ###
 
   - task: PublishTestResults@2
@@ -45,5 +35,5 @@ steps:
       testRunner: NUnit
       testResultsFiles: '**/TestResult.xml'
       searchFolder: $(System.DefaultWorkingDirectory)
-      testRunTitle: Mac Unit Tests
+      testRunTitle: Mac $(configuration) Unit Tests
       publishRunAttachments: true

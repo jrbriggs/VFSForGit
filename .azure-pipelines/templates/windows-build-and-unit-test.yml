@@ -1,4 +1,5 @@
 steps:
+
   - script: $(Build.Repository.LocalPath)\\Scripts\\NukeBuildOutputs.bat
     ###
     displayName: Delete previous build outputs

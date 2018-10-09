@@ -20,6 +20,13 @@ jobs:
     - template: templates/windows-build-and-unit-test.yml
 
   - job: macOS
+    strategy:
+      maxParallel: 2
+      matrix:
+        debug:
+          configuration: debug
+        release:
+          configuration: release
     pool:
       vmImage: macOS 10.13
     steps:
