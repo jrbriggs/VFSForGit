@@ -2,7 +2,7 @@ name: "$(date:yy)$(DayOfYear)$(rev:.r)"
 steps:
   - template: "templates/windows-build-and-unit-test.yml"
     parameters:
-      BuildConfiguration: "$(BuildConfiguration)"
-      MajorAndMinorVersion: "$(GVFSMajorAndMinorVersion)"
-      Revision: "$(Build.BuildNumber)"
-  - script: "echo hello world"
+      buildConfiguration: $(BuildConfiguration)
+      majorAndMinorVersion: $(GVFSMajorAndMinorVersion)
+      revision: $(Build.BuildNumber)
+  - script: echo hello world
