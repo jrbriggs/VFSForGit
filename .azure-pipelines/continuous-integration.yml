@@ -1,5 +1,9 @@
 name: $(date:yy)$(DayOfYear)$(rev:.r)
 
+trigger:
+  - master
+  - releases/shipped
+
 variables:
   majorAndMinorVersion: '0.5'
   revision: '$(Build.BuildNumber)'
