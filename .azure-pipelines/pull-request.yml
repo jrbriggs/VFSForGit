@@ -1,32 +1,19 @@
 name: $(date:yy)$(DayOfYear)$(rev:.r)
 
 variables:
-  majorAndMinorVersion: '0.5'
+  majorAndMinorVersion: '0.4'
   revision: '$(Build.BuildNumber)'
   platform: 'x64'
+  configuration: release
 
 jobs:
   - job: Windows
-    strategy:
-      maxParallel: 2
-      matrix:
-        debug:
-          configuration: debug
-        release:
-          configuration: release
     pool:
       vmImage: vs2017-win2016
     steps:
     - template: templates/windows-build-and-unit-test.yml
 
   - job: macOS
-    strategy:
-      maxParallel: 2
-      matrix:
-        debug:
-          configuration: debug
-        release:
-          configuration: release
     pool:
       vmImage: macOS 10.13
     steps:
