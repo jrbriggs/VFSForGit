@@ -1,0 +1,4 @@
+b=%VFS_SCRIPTSDIR%\BuildGVFSForWindows.bat $*
+br=%VFS_SCRIPTSDIR%\BuildGVFSForWindows.bat Release $*
+ut=%VFS_SCRIPTSDIR%\RunUnitTests.bat $*
+ft=%VFS_SCRIPTSDIR%\RunFunctionalTests.bat $*
