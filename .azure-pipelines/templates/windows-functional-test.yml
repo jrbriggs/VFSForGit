@@ -1,5 +1,11 @@
 steps:
 
+  - task: DotNetCoreInstaller@0
+    displayName: Use .NET Core SDK 2.1.301
+    inputs:
+      packageType: sdk
+      version: '2.1.301'
+
   - task: DownloadBuildArtifacts@0
     displayName: Download functional test enlistment
     inputs:
