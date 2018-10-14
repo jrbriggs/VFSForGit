@@ -7,11 +7,12 @@ trigger:
 variables:
   majorAndMinorVersion: '0.5'
   revision: '$(Build.BuildNumber)'
+  platform: 'x64'
 
 jobs:
   - job: Windows
     variables:
-      platform: Windows
+      platformFriendlyName: Windows
     strategy:
       maxParallel: 2
       matrix:
@@ -26,7 +27,7 @@ jobs:
 
   - job: macOS
     variables:
-      platform: macOS
+      platformFriendlyName: macOS
     strategy:
       maxParallel: 2
       matrix:

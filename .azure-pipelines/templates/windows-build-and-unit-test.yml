@@ -41,6 +41,6 @@ steps:
     displayName: Publish functional test enlistment
     inputs:
       pathtoPublish: $(Build.ArtifactsStagingDirectory)\Tests
-      artifactName: "FunctionalTests_$(platform)_$(configuration)"
+      artifactName: "FunctionalTests_$(platformFriendlyName)_$(configuration)"
       parallel: true
       parallelCount: 8
