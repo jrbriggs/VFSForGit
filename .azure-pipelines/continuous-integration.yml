@@ -9,7 +9,7 @@ variables:
   revision: '$(Build.BuildNumber)'
 
 jobs:
-  - job: Windows
+  - job: Windows Build
     variables:
       platformFriendlyName: Windows
     strategy:
@@ -24,7 +24,7 @@ jobs:
     steps:
     - template: templates/windows-build-and-unit-test.yml
 
-  - job: macOS
+  - job: macOS Build
     variables:
       platformFriendlyName: macOS
     strategy:
@@ -38,3 +38,12 @@ jobs:
       vmImage: macOS 10.13
     steps:
     - template: templates/macos-build-and-unit-test.yml
+
+  - job: Windows Functional Tests
+    pool:
+      name: FunctionalTests
+    dependsOn: Windows Build
+    condition: succeeded()
+    steps:
+    - checkout: none # We'll get the test enlistment from Windows Build job
+    - template: templates/windows-functional-test.yml
