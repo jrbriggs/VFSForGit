@@ -87,6 +87,7 @@
       <PackagesPath ParameterType="System.String" Required="true" />
       <OutputFile ParameterType="System.String" Required="true" />
       <LatestInstaller ParameterType="System.String" Output="true" />
+      <LatestInstallerFilename ParameterType="System.String" Output="true" />
     </ParameterGroup>
     <Task>
       <Code Type="Class" Source="GenerateGitVersionConstants.cs" />
@@ -102,6 +103,17 @@
     </ParameterGroup>
     <Task>
       <Code Type="Class" Source="GenerateInstallScripts.cs" />
+    </Task>
+  </UsingTask>
+
+  <UsingTask TaskName="GenerateUnifiedInstallScript" TaskFactory="CodeTaskFactory"  AssemblyFile="$(MSBuildToolsPath)\Microsoft.Build.Tasks.v12.0.dll">
+    <ParameterGroup>
+      <G4WInstallerFilename ParameterType="System.String" Required="true" />
+      <GVFSSetupFilename ParameterType="System.String" Required="true" />
+      <OutputPath ParameterType="System.String" Required="true" />
+    </ParameterGroup>
+    <Task>
+      <Code Type="Class" Source="GenerateUnifiedInstallScript.cs" />
     </Task>
   </UsingTask>
 
@@ -140,11 +152,13 @@
   </UsingTask>
 
   <PropertyGroup>
-    <GVFSSetupPath>$(BuildOutputDir)\GVFS.Installer\bin\x64\$(Configuration)\SetupGVFS.$(GVFSVersion).exe</GVFSSetupPath>
+    <GVFSSetupFilename>SetupGVFS.$(GVFSVersion).exe</GVFSSetupFilename>
+    <GVFSSetupPath>%VFS_OUTPUTDIR%\GVFS.Installer\bin\x64\$(Configuration)\$(GVFSSetupFilename)</GVFSSetupPath>
     <OutDir>$(BuildOutputDir)\GVFS.Build\</OutDir>
     <GitVersionConstantsPath>$(OutDir)GVFSConstants.GitVersion.cs</GitVersionConstantsPath>
     <G4WInstallBatPath>$(OutDir)InstallG4W.bat</G4WInstallBatPath>
     <GVFSInstallBatPath>$(OutDir)InstallGVFS.bat</GVFSInstallBatPath>
+    <UnifiedInstallBatPath>$(OutDir)InstallProduct.bat</UnifiedInstallBatPath>
     <GVFSInstallerNuspecPath>$(OutDir)GVFS.Installers.nuspec</GVFSInstallerNuspecPath>
     <AssemblyVersionPath>$(BuildOutputDir)\CommonAssemblyVersion.cs</AssemblyVersionPath>
     <VersionHeaderPath>$(BuildOutputDir)\CommonVersionHeader.h</VersionHeaderPath>
@@ -188,13 +202,15 @@
 
   <Target Name="GenerateInstallScripts" 
           DependsOnTargets="GVFSPackageRestore;$(GenerateInstallScriptsDependsOn)"
-          Inputs="$(RestoreTimestampPath);@(GeneratedPackageConfig);$(MSBuildThisFileFullPath);$(MSBuildProjectFullPath);$(MSBuildThisFileDirectory)GenerateGitVersionConstants.cs;$(MSBuildThisFileDirectory)GenerateInstallScripts.cs;$(MSBuildThisFileDirectory)GenerateGVFSInstallersNuspec.cs"
-          Outputs="$(GitVersionConstantsPath);$(G4WInstallBatPath);$(GVFSInstallBatPath);$(GVFSInstallerNuspecPath)"
+          Inputs="$(RestoreTimestampPath);@(GeneratedPackageConfig);$(MSBuildThisFileFullPath);$(MSBuildProjectFullPath);$(MSBuildThisFileDirectory)GenerateGitVersionConstants.cs;$(MSBuildThisFileDirectory)GenerateInstallScripts.cs;$(MSBuildThisFileDirectory)GenerateGVFSInstallersNuspec.cs;$(MSBuildThisFileDirectory)GenerateUnifiedInstallScript.cs"
+          Outputs="$(GitVersionConstantsPath);$(G4WInstallBatPath);$(GVFSInstallBatPath);$(GVFSInstallerNuspecPath);$(UnifiedInstallBatPath)"
           Condition="'$(OS)' == 'Windows_NT'">
     <GenerateGitVersionConstants GitPackageVersion="$(GitPackageVersion)" PackagesPath="$(PackagesDir)" OutputFile="$(GitVersionConstantsPath)">
-      <Output PropertyName="G4WInstaller" TaskParameter="LatestInstaller" />
+      <Output TaskParameter="LatestInstaller" PropertyName="G4WInstaller" />
+      <Output TaskParameter="LatestInstallerFilename" PropertyName="G4WInstallerFilename" />
     </GenerateGitVersionConstants>
     <GenerateInstallScripts G4WInstallerPath="$(G4WInstaller)" GVFSSetupPath="$(GVFSSetupPath)" G4WInstallBatPath="$(G4WInstallBatPath)" GVFSInstallBatPath="$(GVFSInstallBatPath)" />
+    <GenerateUnifiedInstallScript G4WInstallerFilename="$(G4WInstallerFilename)" GVFSSetupFilename="$(GVFSSetupFilename)" OutputPath="$(UnifiedInstallBatPath)" />
     <GenerateGVFSInstallersNuspec GVFSSetupPath="$(GVFSSetupPath)" GitPackageVersion="$(GitPackageVersion)" PackagesPath="$(PackagesDir)" OutputFile="$(GVFSInstallerNuspecPath)" />
   </Target>
 
