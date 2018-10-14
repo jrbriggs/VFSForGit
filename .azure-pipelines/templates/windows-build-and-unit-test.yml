@@ -1,5 +1,12 @@
 steps:
 
+  - task: BatchScript@1
+    displayName: Initialize VFS for Git developer environment
+    inputs:
+      filename: $(Build.Repository.LocalPath)\\init.cmd
+      workingFolder: $(Build.Repository.LocalPath)
+      modifyEnvironment: true    
+
   - script: $(Build.Repository.LocalPath)\\Scripts\\NukeBuildOutputs.bat
     displayName: Delete previous build outputs
     continueOnError: true
