@@ -203,7 +203,7 @@
   <Target Name="GenerateInstallScripts" 
           DependsOnTargets="GVFSPackageRestore;$(GenerateInstallScriptsDependsOn)"
           Inputs="$(RestoreTimestampPath);@(GeneratedPackageConfig);$(MSBuildThisFileFullPath);$(MSBuildProjectFullPath);$(MSBuildThisFileDirectory)GenerateGitVersionConstants.cs;$(MSBuildThisFileDirectory)GenerateInstallScripts.cs;$(MSBuildThisFileDirectory)GenerateGVFSInstallersNuspec.cs;$(MSBuildThisFileDirectory)GenerateUnifiedInstallScript.cs"
-          Outputs="$(GitVersionConstantsPath);$(G4WInstallBatPath);$(GVFSInstallBatPath);$(GVFSInstallerNuspecPath);$(UnifiedInstallBatPath)"
+          Outputs="$(GitVersionConstantsPath);$(G4WInstallBatPath);$(GVFSInstallBatPath);$(GVFSInstallerNuspecPath);$(UnifiedInstallBatPath);$(OutDir)$(G4WInstallerFilename)"
           Condition="'$(OS)' == 'Windows_NT'">
     <GenerateGitVersionConstants GitPackageVersion="$(GitPackageVersion)" PackagesPath="$(PackagesDir)" OutputFile="$(GitVersionConstantsPath)">
       <Output TaskParameter="LatestInstaller" PropertyName="G4WInstaller" />
@@ -212,6 +212,7 @@
     <GenerateInstallScripts G4WInstallerPath="$(G4WInstaller)" GVFSSetupPath="$(GVFSSetupPath)" G4WInstallBatPath="$(G4WInstallBatPath)" GVFSInstallBatPath="$(GVFSInstallBatPath)" />
     <GenerateUnifiedInstallScript G4WInstallerFilename="$(G4WInstallerFilename)" GVFSSetupFilename="$(GVFSSetupFilename)" OutputPath="$(UnifiedInstallBatPath)" />
     <GenerateGVFSInstallersNuspec GVFSSetupPath="$(GVFSSetupPath)" GitPackageVersion="$(GitPackageVersion)" PackagesPath="$(PackagesDir)" OutputFile="$(GVFSInstallerNuspecPath)" />
+    <Copy SourceFiles="$(G4WInstaller)" DestinationFiles="$(OutDir)\$(G4WInstallerFilename)" />
   </Target>
 
   <Target Name="GenerateShared"
