@@ -15,4 +15,4 @@ Set-Location $cwd
 # Set up macros.
 .\Scripts\Macros.ps1
 
-$Host.UI.RawUI.WindowTitle = "VFS for Git Developer Shell"
+$Host.UI.RawUI.WindowTitle = "VFS for Git Developer Shell ($Env:VFS_SRCDIR)"

@@ -42,7 +42,7 @@ SET _PARSED_PATH_=
 
 REM Mark this as a dev shell and load the macros
 SET VFS_DEVSHELL=true
-TITLE VFS ^for Git Developer Shell
+TITLE VFS ^for Git Developer Shell ^(%VFS_SRCDIR%^)
 doskey /MACROFILE=.\Scripts\Macros.cmd.txt
 
 ECHO ===============================================
