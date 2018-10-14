@@ -6,16 +6,16 @@ steps:
       buildType: current
       downloadType: specific
       artifactName: FunctionalTests_$(platformFriendlyName)_$(configuration)
-      downloadPath: $(Build.BinariesDirectory)/Tests
+      downloadPath: $(Build.BinariesDirectory)
 
   - task: BatchScript@1
     displayName: Initialize VFS for Git developer environment
     inputs:
-      filename: $(Build.BinariesDirectory)/Tests/src/init.cmd
-      workingFolder: $(Build.BinariesDirectory)/Tests/src
+      filename: $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/src/init.cmd
+      workingFolder: $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/src
       modifyEnvironment: true
 
-  - script: $(Build.BinariesDirectory)/Tests/src/Scripts/ReinstallGVFS.bat $(configuration)
+  - script: $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/src/Scripts/ReinstallGVFS.bat $(configuration)
     displayName: Run VFSForGit and G4W installers
 
   - script: git config --global credential.interactive never
@@ -27,7 +27,7 @@ steps:
   - script: cmdkey /generic:LegacyGeneric:target=git:https://gvfs.visualstudio.com/ci/_git/ForTests /user:"Agent PAT" /password:$(VFSForGitOrgCodePat)
     displayName: Save agent password in credential store for useHttpPath
 
-  - script: $(Build.BinariesDirectory)/Tests/src/Scripts/RunFunctionalTests.bat $(configuration) --test-gvfs-on-path --replace-inbox-projfs
+  - script: $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/src/Scripts/RunFunctionalTests.bat $(configuration) --test-gvfs-on-path --replace-inbox-projfs
     displayName: Run functional tests
 
   - task: PublishTestResults@2
