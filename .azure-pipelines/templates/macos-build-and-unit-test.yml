@@ -27,3 +27,4 @@ steps:
       searchFolder: $(System.DefaultWorkingDirectory)
       testRunTitle: Mac $(configuration) Unit Tests
       publishRunAttachments: true
+    condition: succeededOrFailed()

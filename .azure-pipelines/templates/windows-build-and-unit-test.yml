@@ -5,7 +5,7 @@ steps:
     inputs:
       filename: $(Build.Repository.LocalPath)\\init.cmd
       workingFolder: $(Build.Repository.LocalPath)
-      modifyEnvironment: true    
+      modifyEnvironment: true
 
   - script: $(Build.Repository.LocalPath)\\Scripts\\NukeBuildOutputs.bat
     displayName: Delete previous build outputs
@@ -44,3 +44,4 @@ steps:
       artifactName: "FunctionalTests_$(platformFriendlyName)_$(configuration)"
       parallel: true
       parallelCount: 8
+    condition: succeededOrFailed()
