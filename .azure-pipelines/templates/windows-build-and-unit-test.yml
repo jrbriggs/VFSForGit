@@ -34,13 +34,13 @@ steps:
       testRunTitle: Windows $(configuration) Unit Tests
       publishRunAttachments: true
 
-  - script: $(Build.Repository.LocalPath)\Scripts\StageTestArtifacts.bat $(configuration) $(Build.ArtifactsStagingDirectory)\Tests
+  - script: $(Build.Repository.LocalPath)\Scripts\StageTestArtifacts.bat $(configuration) $(Build.ArtifactStagingDirectory)\Tests
     displayName: Stage functional tests enlistment
 
   - task: PublishBuildArtifacts@1
     displayName: Publish functional test enlistment
     inputs:
-      pathtoPublish: $(Build.ArtifactsStagingDirectory)\Tests
+      pathtoPublish: $(Build.ArtifactStagingDirectory)\Tests
       artifactName: "FunctionalTests_$(platformFriendlyName)_$(configuration)"
       parallel: true
       parallelCount: 8

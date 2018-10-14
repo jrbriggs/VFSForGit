@@ -7,7 +7,6 @@ trigger:
 variables:
   majorAndMinorVersion: '0.5'
   revision: '$(Build.BuildNumber)'
-  platform: 'x64'
 
 jobs:
   - job: Windows
