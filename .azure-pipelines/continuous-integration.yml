@@ -40,6 +40,9 @@ jobs:
     - template: templates/macos-build-and-unit-test.yml
 
   - job: FunctionalTests_Windows
+    variables:
+      platformFriendlyName: Windows
+      configuration: Release
     pool:
       name: FunctionalTests
     dependsOn: Build_Windows
