@@ -14,8 +14,8 @@ jobs:
     strategy:
       maxParallel: 2
       matrix:
-        debug:
-          configuration: debug
+        #debug:
+        #  configuration: debug
         release:
           configuration: release
     pool:
@@ -27,8 +27,8 @@ jobs:
     strategy:
       maxParallel: 2
       matrix:
-        debug:
-          configuration: debug
+        #debug:
+        #  configuration: debug
         release:
           configuration: release
     pool:
