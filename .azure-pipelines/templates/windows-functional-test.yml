@@ -34,8 +34,8 @@ steps:
     displayName: Publish functional test results
     inputs:
       testRunner: NUnit
-      testResultsFiles: "**\\TestResult.xml"
-      searchFolder: $(Build.BinariesDirectory)
+      testResultsFiles: "**\\TestResult*.xml"
+      searchFolder: $(System.DefaultWorkingDirectory)
       testRunTitle: Windows $(configuration) Functional Tests
       publishRunAttachments: true
     condition: succeededOrFailed()
