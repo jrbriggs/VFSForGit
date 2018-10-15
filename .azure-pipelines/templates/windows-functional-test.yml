@@ -6,6 +6,9 @@ steps:
       packageType: sdk
       version: '2.1.301'
 
+  - script: dotnet restore GVFS.sln
+    displayName: Restore packages [TODO REMOVEME]
+
   - task: DownloadBuildArtifacts@0
     displayName: Download functional test enlistment
     inputs:

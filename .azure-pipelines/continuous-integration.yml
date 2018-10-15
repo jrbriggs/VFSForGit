@@ -48,5 +48,4 @@ jobs:
     dependsOn: Build_Windows
     condition: succeeded()
     steps:
-    - checkout: none # We'll get the test enlistment from Build_Windows job
     - template: templates/windows-functional-test.yml
