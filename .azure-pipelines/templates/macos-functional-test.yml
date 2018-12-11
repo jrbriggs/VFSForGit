@@ -21,8 +21,11 @@ steps:
       artifactName: FunctionalTests_$(platformFriendlyName)_$(configuration)
       downloadPath: $(Build.BinariesDirectory)
 
-  - bash: chmod +x $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/src/Scripts/Mac/*.sh
-    displayName: Ensure scripts are executable
+  - bash: |
+      chmod +x $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/src/Scripts/Mac/*.sh
+      chmod +x $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/src/ProjFS.Mac/Scripts/*.sh
+      chmod +x $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/Publish/*
+    displayName: Ensure tests assets are executable
 
   - bash: $(Build.BinariesDirectory)/FunctionalTests_$(platformFriendlyName)_$(configuration)/src/Scripts/Mac/PrepFunctionalTests.sh
     displayName: Prep functional tests
