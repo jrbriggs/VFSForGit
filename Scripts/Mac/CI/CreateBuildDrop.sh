@@ -28,4 +28,4 @@ rsync -avm $VFS_PUBLISHDIR $BUILDDROP_ROOT
 rsync -avm $VFS_SCRIPTDIR $BUILDDROP_SRC/Scripts
 rsync -avm $VFS_SRCDIR/ProjFS.Mac/Scripts $BUILDDROP_PROJFS
 rsync -avm $VFS_OUTPUTDIR/ProjFS.Mac/Native/Build/Products/$CONFIGURATION $BUILDDROP_KEXT
-
+cp $VFS_SRCDIR/nuget.config $BUILDDROP_SRC
