@@ -58,7 +58,7 @@ jobs:
       platformFriendlyName: macOS
       configuration: Release
     pool:
-     vmImage: macOS 10.13
+     name: MacFunctionalTests
     dependsOn: Build_macOS
     condition: succeeded()
     steps:
